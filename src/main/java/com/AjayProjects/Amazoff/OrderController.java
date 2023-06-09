@@ -35,17 +35,27 @@ public class OrderController {
       return new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
      }
     }
-
     @GetMapping("/get-order-by-id/{Id}")
     public ResponseEntity<Order> getOrderbyId(@PathVariable String Id) throws RuntimeException{
      try {
       Order order=service.getOrder(Id);
       return new ResponseEntity<>(order,HttpStatus.OK);
      }catch (RuntimeException e){
+      System.out.println(" Not found Order with this ID");
        return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
      }
     }
 
+
+    @GetMapping("get-partner-by-id/{Id}")
+     public ResponseEntity<DeliveryPartner> getPartnerbyId(@PathVariable String Id){
+     try {
+      DeliveryPartner partner=service.addPartnerId(Id);
+      return new ResponseEntity<>(partner,HttpStatus.CREATED);
+     }catch (RuntimeException ex){
+      return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+     }
+    }
 
 
 }

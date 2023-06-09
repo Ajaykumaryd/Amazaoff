@@ -51,5 +51,17 @@ public class OrderService {
     }
         throw new RuntimeException("Order Id is Not found");
     }
+
+    public DeliveryPartner addPartnerId(String id) {
+    Optional<DeliveryPartner> optionalDeliveryPartner=repository.getPartner(id);
+    if(optionalDeliveryPartner.isPresent()){
+        return optionalDeliveryPartner.get();
+    }else{
+        throw new RuntimeException("Partner Id is Not Present");
+    }
+    }
+
+
+
 }
 
