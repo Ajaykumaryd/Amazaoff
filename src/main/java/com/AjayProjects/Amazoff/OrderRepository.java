@@ -29,7 +29,7 @@ public class OrderRepository {
      }
     }
 
-    public Optional<DeliveryPartner> getPartner(String partnerId) {
+    public Optional<DeliveryPartner> getPartner(String partnerId){
      if(partnerMap.containsKey(partnerId)){
          return Optional.of(partnerMap.get(partnerId));
      }else {
@@ -37,11 +37,13 @@ public class OrderRepository {
      }
     }
 
-    public void addOrderPartnerPair(String orderId, String partnerId) {
-
-        ArrayList<String> orders=orderPartnerMap.getOrDefault(partnerId,new ArrayList<>());
+    public void addOrderPartnerPair(String orderId, String partnerId){
+        ArrayList<String> orders=orderPartnerMap.getOrDefault(partnerId,new ArrayList<>());  //if order is already there
         orders.add(orderId);
         orderPartnerMap.put(partnerId,orders);
+    }
 
+    public Order getOrderbyId(String Id) {
+    return orderMap.get(Id);
     }
 }

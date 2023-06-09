@@ -27,9 +27,25 @@ public class OrderController {
 
     @PutMapping("/add-order-partner")
     public ResponseEntity<String> addPartnerOrder(@RequestParam String OrderId,@RequestParam String partnerId){
-    service.addPair(OrderId,partnerId);
-    return new ResponseEntity<>("New Order Pair added SucessFully",HttpStatus.CREATED);
+
+     try{
+      service.addPair(OrderId,partnerId);
+      return new ResponseEntity<>("New Order Pair added SucessFully",HttpStatus.CREATED);
+     }catch (RuntimeException ex){
+      return new ResponseEntity<>(ex.getMessage(),HttpStatus.NOT_FOUND);
+     }
     }
+
+    @GetMapping("/get-order-by-id/{Id}")
+    public ResponseEntity<Order> getOrderbyId(@PathVariable String Id) throws RuntimeException{
+     try {
+      Order order=service.getOrder(Id);
+      return new ResponseEntity<>(order,HttpStatus.OK);
+     }catch (RuntimeException e){
+       return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
+     }
+    }
+
 
 
 }
