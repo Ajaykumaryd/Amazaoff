@@ -4,6 +4,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 
@@ -15,6 +16,9 @@ public class OrderService {
     @Autowired
     OrderRepository repository;
 
+
+
+
     public void addOrder(Order order) {
         repository.addOrder(order);
     }
@@ -25,10 +29,8 @@ public class OrderService {
     }
 
     public void addPair(String orderId,String partnerId) {
-
         Optional<Order> optionalOrder =repository.getOrder(orderId);
         Optional<DeliveryPartner> optionalDeliveryPartner=repository.getPartner(partnerId);
-
         if(optionalOrder.isEmpty()) {
             log.warn("order ID is not present" + orderId);
             throw new RuntimeException("order ID is not present " + orderId);
@@ -37,7 +39,6 @@ public class OrderService {
             log.warn("Partner ID is not present" + partnerId);
             throw new RuntimeException("Partner ID is not present " + partnerId);
         }
-
         DeliveryPartner partner=optionalDeliveryPartner.get();
         partner.setNumberOfOrders(partner.getNumberOfOrders()+1);
         repository.addPartner(partner);
@@ -60,6 +61,23 @@ public class OrderService {
         throw new RuntimeException("Partner Id is Not Present");
     }
     }
+    public int getOrders(String id) {
+
+//        Optional<DeliveryPartner> optionalDeliveryPartner=repository.getPartner(id);
+//        if(optionalDeliveryPartner.isPresent()){
+//            optionalDeliveryPartner.get().getNumberOfOrders();
+//        }
+//        Method2
+        int orders=repository.getOrders(id);
+     return orders;
+    }
+
+    public ArrayList<String> getList(String id) {
+     ArrayList<String> list=repository.getList(id);
+    return list;
+    }
+
+
 
 
 

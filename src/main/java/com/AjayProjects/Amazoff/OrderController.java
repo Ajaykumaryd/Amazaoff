@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
@@ -56,6 +58,23 @@ public class OrderController {
       return new ResponseEntity<>(null,HttpStatus.NOT_FOUND);
      }
     }
+
+    @GetMapping("get-order-count-by-partner-id/{Id}")
+
+    public ResponseEntity<Integer>numberOfOrders(@PathVariable String Id){
+    int numberOrders=service.getOrders(Id);
+    return new ResponseEntity<>(numberOrders,HttpStatus.OK);
+    }
+
+    @GetMapping("/get-orders-by-partner-id/{Id}")
+    public ResponseEntity<ArrayList<String>> getListofOrders(@PathVariable String Id){
+    ArrayList<String> ans=service.getList(Id);
+    return new ResponseEntity<>(ans,HttpStatus.ACCEPTED);
+    }
+
+
+
+
 
 
 }

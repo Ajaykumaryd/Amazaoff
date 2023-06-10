@@ -36,10 +36,12 @@ public class Order {
     }
 
     public void setDeliveryTime(int deliveryTime) {
+
         this.deliveryTime = deliveryTime;
     }
 
     public void setDeliveryTime(String deliveryTime) {
+
         this.deliveryTime = convertDeliveryTime(deliveryTime);
     }
 

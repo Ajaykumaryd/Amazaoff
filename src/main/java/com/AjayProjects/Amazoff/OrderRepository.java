@@ -7,11 +7,13 @@ import java.util.HashMap;
 import java.util.Optional;
 
 @Service
-public class OrderRepository {
+public  class OrderRepository {
 
     HashMap<String,Order> orderMap=new HashMap<>();
     HashMap<String,DeliveryPartner> partnerMap=new HashMap<>();
     HashMap<String,ArrayList<String>> orderPartnerMap=new HashMap<>(); //key partner id value is order ids
+
+
 
     public void addOrder(Order order) {
         orderMap.put(order.getId(),order);
@@ -46,4 +48,19 @@ public class OrderRepository {
     public Order getOrderbyId(String Id) {
     return orderMap.get(Id);
     }
+
+    public int getOrders(String id){
+    ArrayList<String> ans= orderPartnerMap.get(id);
+    return ans.size();
+    }
+
+
+    public ArrayList<String> getList(String id) {
+     ArrayList<String> list=orderPartnerMap.get(id);
+     return list;
+    }
+
+
+
+
 }
