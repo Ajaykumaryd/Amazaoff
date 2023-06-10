@@ -18,7 +18,6 @@ public class OrderService {
 
 
 
-
     public void addOrder(Order order) {
         repository.addOrder(order);
     }
@@ -72,10 +71,7 @@ public class OrderService {
      return orders;
     }
 
-    public ArrayList<String> getList(String id) {
-     ArrayList<String> list=repository.getList(id);
-    return list;
-    }
+
 
 
 

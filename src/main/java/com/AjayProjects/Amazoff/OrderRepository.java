@@ -9,10 +9,11 @@ import java.util.Optional;
 @Service
 public  class OrderRepository {
 
-    HashMap<String,Order> orderMap=new HashMap<>();
+     HashMap<String,Order> orderMap=new HashMap<>();
     HashMap<String,DeliveryPartner> partnerMap=new HashMap<>();
-    HashMap<String,ArrayList<String>> orderPartnerMap=new HashMap<>(); //key partner id value is order ids
+     HashMap<String,ArrayList<String>> partnerOrderMap=new HashMap<>(); //key partner id value is order ids
 
+    HashMap<String,String> orderPartnerMap=new HashMap<>();
 
 
     public void addOrder(Order order) {
@@ -40,9 +41,10 @@ public  class OrderRepository {
     }
 
     public void addOrderPartnerPair(String orderId, String partnerId){
-        ArrayList<String> orders=orderPartnerMap.getOrDefault(partnerId,new ArrayList<>());  //if order is already there
+        orderPartnerMap.put(orderId,partnerId);
+        ArrayList<String> orders=partnerOrderMap.getOrDefault(partnerId,new ArrayList<>());  //if order is already there
         orders.add(orderId);
-        orderPartnerMap.put(partnerId,orders);
+        partnerOrderMap.put(partnerId,orders);
     }
 
     public Order getOrderbyId(String Id) {
@@ -50,17 +52,21 @@ public  class OrderRepository {
     }
 
     public int getOrders(String id){
-    ArrayList<String> ans= orderPartnerMap.get(id);
+    ArrayList<String> ans= partnerOrderMap.get(id);
     return ans.size();
     }
 
 
-    public ArrayList<String> getList(String id) {
-     ArrayList<String> list=orderPartnerMap.get(id);
-     return list;
+
+//    public static ArrayList<String> getAllOrders() {
+//        return new ArrayList<>(orderMap.keySet());
+//    }
+
+
+
     }
 
 
 
 
-}
+

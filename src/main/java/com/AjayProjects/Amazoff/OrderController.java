@@ -66,11 +66,9 @@ public class OrderController {
     return new ResponseEntity<>(numberOrders,HttpStatus.OK);
     }
 
-    @GetMapping("/get-orders-by-partner-id/{Id}")
-    public ResponseEntity<ArrayList<String>> getListofOrders(@PathVariable String Id){
-    ArrayList<String> ans=service.getList(Id);
-    return new ResponseEntity<>(ans,HttpStatus.ACCEPTED);
-    }
+
+
+
 
 
 
