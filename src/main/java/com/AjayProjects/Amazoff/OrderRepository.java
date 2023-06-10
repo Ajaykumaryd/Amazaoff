@@ -9,22 +9,23 @@ import java.util.Optional;
 @Service
 public  class OrderRepository {
 
-     HashMap<String,Order> orderMap=new HashMap<>();
-    HashMap<String,DeliveryPartner> partnerMap=new HashMap<>();
-     HashMap<String,ArrayList<String>> partnerOrderMap=new HashMap<>(); //key partner id value is order ids
+    static  HashMap<String,Order> orderMap=new HashMap<>();
+    static HashMap<String,DeliveryPartner> partnerMap=new HashMap<>();
+    static HashMap<String,ArrayList<String>> partnerOrderMap=new HashMap<>(); //key partner id value is order ids
 
-    HashMap<String,String> orderPartnerMap=new HashMap<>();
+    static HashMap<String,String> orderPartnerMap=new HashMap<>();
 
 
-    public void addOrder(Order order) {
+
+    public static void addOrder(Order order) {
         orderMap.put(order.getId(),order);
     }
 
-    public void addPartner(DeliveryPartner partner) {
+    public static void addPartner(DeliveryPartner partner) {
         partnerMap.put(partner.getId(),partner);
     }
 
-    public Optional<Order> getOrder(String orderId){
+    public static Optional<Order> getOrder(String orderId){
      if(orderMap.containsKey(orderId)){
         return Optional.of(orderMap.get(orderId));
      }else {
@@ -32,7 +33,7 @@ public  class OrderRepository {
      }
     }
 
-    public Optional<DeliveryPartner> getPartner(String partnerId){
+    public static Optional<DeliveryPartner> getPartner(String partnerId){
      if(partnerMap.containsKey(partnerId)){
          return Optional.of(partnerMap.get(partnerId));
      }else {
@@ -40,31 +41,34 @@ public  class OrderRepository {
      }
     }
 
-    public void addOrderPartnerPair(String orderId, String partnerId){
+    public static void addOrderPartnerPair(String orderId, String partnerId){
         orderPartnerMap.put(orderId,partnerId);
         ArrayList<String> orders=partnerOrderMap.getOrDefault(partnerId,new ArrayList<>());  //if order is already there
         orders.add(orderId);
         partnerOrderMap.put(partnerId,orders);
     }
 
-    public Order getOrderbyId(String Id) {
-    return orderMap.get(Id);
+    public static Order getOrderbyId(String Id) {
+        return orderMap.get(Id);
     }
+
+
 
     public int getOrders(String id){
     ArrayList<String> ans= partnerOrderMap.get(id);
     return ans.size();
     }
 
-
-
-//    public static ArrayList<String> getAllOrders() {
-//        return new ArrayList<>(orderMap.keySet());
-//    }
-
-
-
+    public static ArrayList<String> getAssigned() {
+    return new ArrayList<>(orderPartnerMap.keySet());
     }
+
+    public static ArrayList<String> GetListAllOrders() {
+     return new ArrayList<>(orderMap.keySet());
+    }
+
+
+}
 
 
 

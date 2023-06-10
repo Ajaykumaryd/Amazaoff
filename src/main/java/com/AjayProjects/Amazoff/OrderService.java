@@ -14,20 +14,22 @@ public class OrderService {
 
 
     @Autowired
+    static
     OrderRepository repository;
 
 
 
-    public void addOrder(Order order) {
+
+    public static void addOrder(Order order) {
         repository.addOrder(order);
     }
 
-    public void addPartner(String id) {
+    public static void addPartner(String id) {
         DeliveryPartner partner=new DeliveryPartner(id);
      repository.addPartner(partner);
     }
 
-    public void addPair(String orderId,String partnerId) {
+    public static void addPair(String orderId,String partnerId) {
         Optional<Order> optionalOrder =repository.getOrder(orderId);
         Optional<DeliveryPartner> optionalDeliveryPartner=repository.getPartner(partnerId);
         if(optionalOrder.isEmpty()) {
@@ -44,7 +46,7 @@ public class OrderService {
         repository.addOrderPartnerPair(orderId,partnerId);
         }
 
-    public Order getOrder(String Id) throws RuntimeException {
+    public static Order getOrder(String Id) throws RuntimeException {
     Optional<Order> optionalOrder=repository.getOrder(Id);
     if(optionalOrder.isPresent()){
        return optionalOrder.get();
@@ -52,7 +54,7 @@ public class OrderService {
         throw new RuntimeException("Order Id is Not found");
     }
 
-    public DeliveryPartner addPartnerId(String id) {
+    public static DeliveryPartner addPartnerId(String id) {
     Optional<DeliveryPartner> optionalDeliveryPartner=repository.getPartner(id);
     if(optionalDeliveryPartner.isPresent()){
         return optionalDeliveryPartner.get();
@@ -60,7 +62,7 @@ public class OrderService {
         throw new RuntimeException("Partner Id is Not Present");
     }
     }
-    public int getOrders(String id) {
+    public static int getOrders(String id) {
 
 //        Optional<DeliveryPartner> optionalDeliveryPartner=repository.getPartner(id);
 //        if(optionalDeliveryPartner.isPresent()){
@@ -72,10 +74,20 @@ public class OrderService {
     }
 
 
+    public static ArrayList<String> getOrdersByPartnerId(String partnerId) {
+    ArrayList<String> ans=repository.getAssigned();
+    return ans;
+    }
 
 
+    public static ArrayList<String> getAllOrders() {
+    ArrayList<String> ans=repository.GetListAllOrders();
+    return ans;
+    }
 
-
+    public static Integer getUnassignedOrders() {
+    return repository.GetListAllOrders().size()-OrderRepository.getAssigned().size();
+    }
 
 }
 

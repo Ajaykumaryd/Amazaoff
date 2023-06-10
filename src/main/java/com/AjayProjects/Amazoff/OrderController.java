@@ -1,6 +1,5 @@
 package com.AjayProjects.Amazoff;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -66,13 +65,36 @@ public class OrderController {
     return new ResponseEntity<>(numberOrders,HttpStatus.OK);
     }
 
+         @GetMapping("/get-orders-by-partner-id/{partnerId}")
+          public ResponseEntity<ArrayList<String>> getOrdersByPartnerId(@PathVariable String partnerId) {
+          ArrayList<String> orders = OrderService.getOrdersByPartnerId(partnerId);
+          //orders should contain a list of orders by PartnerId
 
+          return new ResponseEntity<>(orders, HttpStatus.CREATED);
+         }
+          @GetMapping("/get-all-orders")
+          public ResponseEntity<ArrayList<String>> getAllOrders(){
+           ArrayList<String> order = OrderService.getAllOrders();
+           return new ResponseEntity<>(order, HttpStatus.CREATED);
+          }
 
-
-
-
-
+          @GetMapping("/get-count-of-unassigned-orders")
+           public ResponseEntity<Integer> getCountOfUnassignedOrders(){
+           Integer countOfOrders = OrderService.getUnassignedOrders();
+           //Count of orders that have not been assigned to any DeliveryPartner
+           return new ResponseEntity<>(countOfOrders, HttpStatus.CREATED);
+ }
 
 
 
 }
+
+
+
+
+
+
+
+
+
+
