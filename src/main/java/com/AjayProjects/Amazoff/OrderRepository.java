@@ -1,12 +1,13 @@
 package com.AjayProjects.Amazoff;
 
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Optional;
 
-@Service
+@Repository
 public  class OrderRepository {
 
     static  HashMap<String,Order> orderMap=new HashMap<>();
@@ -48,16 +49,17 @@ public  class OrderRepository {
         partnerOrderMap.put(partnerId,orders);
     }
 
-    public static Order getOrderbyId(String Id) {
+    public static Order getOrderbyId(String Id){
         return orderMap.get(Id);
     }
 
 
 
-    public int getOrders(String id){
-    ArrayList<String> ans= partnerOrderMap.get(id);
-    return ans.size();
-    }
+//    public int getOrders(String id){
+//    ArrayList<String> ans= new ArrayList<>();
+//          ans=  partnerOrderMap.get(id);
+//    return ans.size();
+//    }
 
     public static ArrayList<String> getAssigned() {
     return new ArrayList<>(orderPartnerMap.keySet());
@@ -66,6 +68,19 @@ public  class OrderRepository {
     public static ArrayList<String> GetListAllOrders() {
      return new ArrayList<>(orderMap.keySet());
     }
+
+    public static ArrayList<String> getAllOrdersforPartner(String partnerId) {
+     ArrayList<String> orders=partnerOrderMap.get(partnerId);
+     return orders;
+    }
+
+
+     public static void delete(String partnerId) {
+     partnerMap.remove(partnerId);
+     }
+
+
+
 
 
 }

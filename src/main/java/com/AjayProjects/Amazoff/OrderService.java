@@ -64,13 +64,14 @@ public class OrderService {
     }
     public static int getOrders(String id) {
 
-//        Optional<DeliveryPartner> optionalDeliveryPartner=repository.getPartner(id);
-//        if(optionalDeliveryPartner.isPresent()){
-//            optionalDeliveryPartner.get().getNumberOfOrders();
-//        }
+        Optional<DeliveryPartner> optionalDeliveryPartner=repository.getPartner(id);
+        if(optionalDeliveryPartner.isPresent()){
+         return optionalDeliveryPartner.get().getNumberOfOrders();
+        }
+        return 0;
 //        Method2
-        int orders=repository.getOrders(id);
-     return orders;
+//        int orders=repository.getOrders(id);
+//     return orders;
     }
 
 
@@ -89,5 +90,41 @@ public class OrderService {
     return repository.GetListAllOrders().size()-OrderRepository.getAssigned().size();
     }
 
+
+    public static Integer getOrdersLeftForPartnerAfterTime(String time,String partnerId) {
+       ArrayList<String> orderIds = repository.getAllOrdersforPartner(partnerId);
+       ArrayList<Order> orders=new ArrayList<>();
+        for(String Id:orderIds){
+              Order order=repository.getOrder(Id).get();
+              if(order.getDeliveryTime()>TimeUtil.convertTime(time));
+              orders.add(order);
+            }
+        return orders.size();
+      }
+
+        public String getLastDeliveryTimeForPartner(String partnerId) {
+//            ArrayList<String> orderIds = repository.getAllOrderforPartner(partnerId);
+            ArrayList<String> orderIds = repository.getAllOrdersforPartner(partnerId);
+            int max = 0;
+            for(String orderId: orderIds) {
+                int deliveryTime = repository.getOrder(orderId).get().getDeliveryTime();
+                if(deliveryTime>max){
+                    max = deliveryTime;
+                }
+            }
+            return TimeUtil.convertTime(max);
+        }
+
+
+         public static void deletePartner(String partnerId){
+         repository.delete(partnerId);
+    }
 }
+
+
+
+
+
+
+
 
